@@ -9,16 +9,19 @@
  <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
 <script src="//code.jquery.com/jquery-1.10.2.js"></script>
 <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
-<link rel="stylesheet" href="/resources/demos/style.css">
 
- <script>
+<link href="resources/foundation-essentials-5.4.6/css/foundation.css" rel="stylesheet">
+<link href="resources/main.css" rel="stylesheet">
+
+<script>
 $(function() {
-$( "#datepicker" ).datepicker();
+	  $( "#datepicker" ).datepicker( $.datepicker.regional[ "it" ] );
 });
 </script>
 
 </head>
 <body>
+
 
 <form method="post" action="addContact" >
 		<table>
