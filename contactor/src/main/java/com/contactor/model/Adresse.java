@@ -36,6 +36,9 @@ public class Adresse {
 	}
 
 	public String getRue() {
+		if(rue == null)
+			return "";
+		else
 		return rue;
 	}
 
@@ -44,6 +47,9 @@ public class Adresse {
 	}
 
 	public String getVille() {
+		if(ville == null)
+			return "";
+		else
 		return ville;
 	}
 
@@ -52,6 +58,9 @@ public class Adresse {
 	}
 
 	public String getCodePostal() {
+		if(codePostal == null)
+			return "";
+		else
 		return codePostal;
 	}
 
@@ -60,6 +69,9 @@ public class Adresse {
 	}
 	
 	public String getNumero() {
+		if(numero == null)
+			return "";
+		else
 		return numero;
 	}
 
@@ -79,5 +91,10 @@ public class Adresse {
 			return other.codePostal == this.codePostal && other.rue == this.rue && other.ville == this.ville;
 		}
 		return super.equals(obj);
+	}
+	
+	@Override
+	public String toString() {
+		return "" + getNumero() + " " + getRue() + ", " + getCodePostal() + ", " + getVille();
 	}
 }

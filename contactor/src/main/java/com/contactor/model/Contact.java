@@ -74,7 +74,10 @@ public class Contact {
 	}
 
 	public String getNom() {
-		return nom;
+		if(nom == null)
+			return "";
+		else
+			return nom;
 	}
 
 	public void setNom(String nom) {
@@ -82,6 +85,9 @@ public class Contact {
 	}
 
 	public String getPrenom() {
+		if(prenom == null)
+			return "";
+		else
 		return prenom;
 	}
 
@@ -90,7 +96,10 @@ public class Contact {
 	}
 
 	public String getEmail() {
-		return email;
+		if(email == null)
+			return "";
+		else
+			return email;
 	}
 
 	public void setEmail(String email) {
