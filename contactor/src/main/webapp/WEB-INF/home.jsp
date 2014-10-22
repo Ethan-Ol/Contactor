@@ -25,9 +25,6 @@
 	
 
 	<h2>Liste des contacts</h2>
-	
-
-
 
 
 <table>
@@ -59,6 +56,10 @@
 			}
 		%>
 	</table>
+	
+	<div>
+ 	 <a href="addContactPage" class="button">Ajouter un nouveau contact</a>
+ 	 </div>
  
 </body>
 </html>
