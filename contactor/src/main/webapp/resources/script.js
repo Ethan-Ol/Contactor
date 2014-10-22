@@ -8,7 +8,7 @@ $(document).ready(function() {
 		  type: 'inline'
 		});
 
-		$( ".datepicker" ).datepicker({
+		$( "#datepicker" ).datepicker({
 		altField: "#datepicker",
 		closeText: 'Fermer',
 		prevText: 'Précédent',

@@ -3,7 +3,9 @@ package com.contactor.controller;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -29,19 +31,33 @@ import com.google.appengine.api.datastore.KeyFactory;
 public class HomeController {
 
 	@RequestMapping(value="/")
-	public String base(){
-		return home();
+	public String base(ModelMap model){
+		return home(model);
 	}
 
-	@RequestMapping(value="/addContactPage")
-	public String test(){
-		return "ajoutContactForm";
-	}
-
-	@RequestMapping(value="/home")
-	public String home(){
+	@RequestMapping(value="/home", method = RequestMethod.GET)
+	public String home(ModelMap model){
 		System.err.println("Requete home");
-		return "home";
+		
+		List<Contact> list = ServiceContact.getContactList();
+		model.addAttribute("contactList",  list);
+		
+		return "test";
+	}
+	
+	@RequestMapping(value="/search", method = RequestMethod.POST)
+	public String search(HttpServletRequest request, ModelMap model) {
+
+		String value = request.getParameter("svalue");
+		System.err.println("Requete search : " + value);
+		
+		if(value == null)
+			return home(model);
+		
+		List<Contact> list = ServiceContact.getContactListOnName(value);
+
+		model.addAttribute("contactList",  list);
+		return "test";
 	}
 	
 	@RequestMapping(value="/addContact", method = RequestMethod.POST)
@@ -66,38 +82,12 @@ public class HomeController {
 		
 		ServiceContact.insertContact(c);
 		
+		List<Contact> list = ServiceContact.getContactList();
+		model.addAttribute("contactList",  list);
+		
 		System.out.println("saved : " + prenom + " " + nom + " : " + email + " ; " + date);
 
 		return new ModelAndView("redirect:home");
-	}
-
-
-	@RequestMapping(value="/addLogin")
-	public String add(){
-		System.err.println("Page : ajout de login");
-		return "add";
-	}
-	
-	@RequestMapping(value="/add", method = RequestMethod.POST)
-	public String add(HttpServletRequest request, ModelMap model) {
-
-		String name = request.getParameter("name");
-		String email = request.getParameter("email");
-
-		Key customerKey = KeyFactory.createKey("Customer", name);
-
-		Date date = new Date();
-		Entity customer = new Entity("Customer", customerKey);
-		customer.setProperty("name", name);
-		customer.setProperty("email", email);
-		customer.setProperty("date", date);
-
-		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-		datastore.put(customer);
-		
-		System.out.println("saved : " + name + " " + email + " ; " + date);
-
-		return "home";
 	}
 }
 
