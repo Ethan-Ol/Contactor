@@ -20,7 +20,7 @@
 <link href="resources/foundation-essentials-5.4.6/css/foundation.css" rel="stylesheet">
 <link href="resources/foundation-essentials-5.4.6/css/docs.css" rel="stylesheet">
 <link href="resources/main.css" rel="stylesheet">
-<<<<<<< HEAD
+
 <link rel="stylesheet" href="resources/magnific-popup/magnific-popup.css">
 <link rel="stylesheet" href="resources/foundation-essentials-5.4.6/foundation-icons/foundation-icons.css">
 
@@ -36,6 +36,7 @@
 	<div class="titre">
 		<h1 style="color: white">Contactor</h1>
 	</div>
+	
 
 <!-- Pop-up ajouter un nouveau contact -->
 	<div id="addContact-popup" class="mfp-hide white-popup">
@@ -57,8 +58,8 @@
 
 			Prenom : <input type="text" style="width: 185px;" maxlength="30" name="prenom" id="name" /> 
 			Nom : <input type="text" style="width: 185px;" maxlength="30" name="nom" id="name" /> 
-			Email: <input type="email" style="width: 185px;" maxlength="30" name="email" id="email" /> 
-			Date de naissance : <input type="date" id="datepicker" style="width: 185px;" maxlength="10" name="date">
+			Email: <input type="text" style="width: 185px;" maxlength="30" name="email" id="email" /> 
+			Date de naissance : <input type="text" id="datepicker" style="width: 185px;" maxlength="10" name="date">
 
 			<input type="submit" class="save button" title="Save" value="Save" />
 		</form>
@@ -103,6 +104,12 @@
 
 			<%
 				}
+			%>
+			
+			<tbody>
+			</table>
+		</div>
+		<%
 				} 
 		else {
 			%>
@@ -113,60 +120,18 @@
 				}
 			%>
 		
-		<tbody>
-	</table>
-</div>
+
 	<div style="margin-top: 5%; text-align: center">
 		<a class="addContact-popup-link button" href="#addContact-popup">Ajouter
 			un nouveau contact</a>
 	</div>
-
-
-=======
-</head>
-<body>
-	<div style="text-align:center">
-		<h1>Carnet de contacts</h1>
-	</div>
 	
-
-	<h2>Liste des contacts</h2>
-
-
-<table>
-  <thead>
-    <tr>
-      <th width="200">Prenom Nom</th>
-      <th>Date de naissance</th>
-      <th width="150">Actif</th>
-      <th width="150">Email</th>
-    </tr>
-  </thead>
-  <tbody>
-  <%
+	<div style="margin-top: 5%; text-align: center">
+		<form method="post" action="search">
+			<input type="text" style="width: 185px;" maxlength="30" name="search" id="name" /> 
+			<input type="submit" class="search-button" title="Search" value="Search" />
+		</form>
+ </div>
  
-		    List<Contact> contactsList = ServiceContact.getContactList();
-		    for(Contact contact : contactsList){
- 
-		%>
-  
-    <tr>
-      <td><%=contact.getPrenom() + " " + contact.getNom() %></td>
-      <td><%=contact.getDate_naissance().toString() %></td>
-      <td><%=contact.isActif()?"actif":"inactif" %></td>
-      <td><a href="#"><%=contact.getEmail() %></a></td>
-       <td><a class="button" href="#">modifier</a></td>
-    </tr>
-  
-  	<%
-			}
-		%>
-	</table>
-	
-	<div>
- 	 <a href="addContactPage" class="button">Ajouter un nouveau contact</a>
- 	 </div>
- 
->>>>>>> FETCH_HEAD
 </body>
 </html>

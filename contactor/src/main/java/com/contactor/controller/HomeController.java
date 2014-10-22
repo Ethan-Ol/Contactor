@@ -15,9 +15,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 
 
+import org.springframework.web.servlet.ModelAndView;
+
 import com.contactor.model.Contact;
 import com.contactor.services.ServiceContact;
-
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
@@ -44,7 +45,7 @@ public class HomeController {
 	}
 	
 	@RequestMapping(value="/addContact", method = RequestMethod.POST)
-	public String addContact(HttpServletRequest request, ModelMap model) {
+	public ModelAndView addContact(HttpServletRequest request, ModelMap model) {
 
 		String prenom = request.getParameter("prenom");
 		String nom = request.getParameter("nom");
@@ -67,7 +68,7 @@ public class HomeController {
 		
 		System.out.println("saved : " + prenom + " " + nom + " : " + email + " ; " + date);
 
-		return "home";
+		return new ModelAndView("redirect:home");
 	}
 
 

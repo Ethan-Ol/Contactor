@@ -5,7 +5,8 @@ public class Adresse {
 	private String rue;
 	private String ville;
 	private String codePostal;
-	
+	private String numero;
+
 	public Adresse() {
 		ini();
 	}
@@ -15,6 +16,7 @@ public class Adresse {
 		rue = other.rue;
 		ville = other.ville;
 		codePostal = other.codePostal;
+		numero = other.numero;
 	}
 	
 	private void ini(){
@@ -22,6 +24,7 @@ public class Adresse {
 		rue = "";
 		ville = "";
 		codePostal = "";
+		numero = "";
 	}
 
 	public long getId() {
@@ -54,6 +57,14 @@ public class Adresse {
 
 	public void setCodePostal(String codePostal) {
 		this.codePostal = codePostal;
+	}
+	
+	public String getNumero() {
+		return numero;
+	}
+
+	public void setNumero(String numero) {
+		this.numero = numero;
 	}
 	
 	@Override
