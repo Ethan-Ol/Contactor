@@ -20,7 +20,6 @@
 <link href="resources/foundation-essentials-5.4.6/css/foundation.css" rel="stylesheet">
 <link href="resources/foundation-essentials-5.4.6/css/docs.css" rel="stylesheet">
 <link href="resources/main.css" rel="stylesheet">
-
 <link rel="stylesheet" href="resources/magnific-popup/magnific-popup.css">
 <link rel="stylesheet" href="resources/foundation-essentials-5.4.6/foundation-icons/foundation-icons.css">
 
@@ -44,28 +43,14 @@
 
 			Prenom : <input type="text" style="width: 185px;" maxlength="30" name="prenom" id="name" /> 
 			Nom : <input type="text" style="width: 185px;" maxlength="30" name="nom" id="name" /> 
-			Email: <input type="email" style="width: 185px;" maxlength="30" name="email" id="email" /> 
-			Date de naissance : <input type="date" id="datepicker" style="width: 185px;" maxlength="10" name="date">
-
-			<input type="submit" class="save button" title="Save" value="Save" />
-		</form>
-
-	</div>
-	
-<!-- Pop-up modifier un contact -->	
-	<div id="editContact-popup" class="mfp-hide white-popup">
-		<form method="post" action="addContact">
-
-			Prenom : <input type="text" style="width: 185px;" maxlength="30" name="prenom" id="name" /> 
-			Nom : <input type="text" style="width: 185px;" maxlength="30" name="nom" id="name" /> 
 			Email: <input type="text" style="width: 185px;" maxlength="30" name="email" id="email" /> 
 			Date de naissance : <input type="text" id="datepicker" style="width: 185px;" maxlength="10" name="date">
 
-			<input type="submit" class="save button" title="Save" value="Save" />
+			<input type="submit" class="save button" title="Save" value="Ajouter" />
 		</form>
 
 	</div>
-	
+		
 	<%
 		List<Contact> contactsList = ServiceContact.getContactList();
 		SimpleDateFormat frenchDate = null;
@@ -74,6 +59,8 @@
 		if (!contactsList.isEmpty()) {
 	%>
 	<div style="margin-top: 120px">
+
+  
 	<form action="">
 
 	</form>
@@ -88,6 +75,7 @@
 				<th></th>
 			</tr>
 		</thead>
+
 		<tbody>
 			<%
 				for (Contact contact : contactsList) {
@@ -101,37 +89,41 @@
 				<td><a href="mailto:<%=contact.getEmail()%>"><%=contact.getEmail()%></a></td>
 				<td><a class="editContact-popup-link" href="#editContact-popup"> <i class="fi-pencil"></i></a></td>
 			</tr>
+			
+			<!-- Pop-up modifier un contact -->	
+		<div id="editContact-popup" class="mfp-hide white-popup">
+		
+		<h3>Edition du contact</h3>
+		<form method="post" action="addContact">
+
+			Prenom : <input type="text" style="width: 185px;" maxlength="30" name="prenom" id="name" value="<%=contact.getPrenom()%>" /> 
+			Nom : <input type="text" style="width: 185px;" maxlength="30" name="nom" id="name" value="<%=contact.getNom()%>" /> 
+			Email: <input type="email" style="width: 185px;" maxlength="30" name="email" id="email" value="<%=contact.getEmail()%>" /> 
+			Date de naissance : <input type="text" id="datepicker" style="width: 185px;" maxlength="10" name="date" value="<%=frenchDate.format(contact.getDate_naissance())%>">
+			
+			<input type="submit" class="button" title="Edit" value="Sauvegarder" />
+		</form>
+		<form method="post" action="DeleteContact">
+		<input class="button [secondary alert success]" title="Delete" value="X Supprimer" />
+		</form>
+
+		</div>
 
 			<%
 				}
-			%>
-			
-			<tbody>
-			</table>
-		</div>
-		<%
 				} 
 		else {
 			%>
 
-			<h2 style="margin-top: 120px; text-align: center">Vous n'avez aucun contact</h2>
+			<h2 style="margin-top: 120px; text-align: center"> Vous n'avez aucun contact</h2>
 
 			<%
 				}
 			%>
 		
-
 	<div style="margin-top: 5%; text-align: center">
 		<a class="addContact-popup-link button" href="#addContact-popup">Ajouter
 			un nouveau contact</a>
 	</div>
-	
-	<div style="margin-top: 5%; text-align: center">
-		<form method="post" action="search">
-			<input type="text" style="width: 185px;" maxlength="30" name="search" id="name" /> 
-			<input type="submit" class="search-button" title="Search" value="Search" />
-		</form>
- </div>
- 
 </body>
 </html>
