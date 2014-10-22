@@ -20,7 +20,6 @@
 <link href="resources/foundation-essentials-5.4.6/css/foundation.css" rel="stylesheet">
 <link href="resources/foundation-essentials-5.4.6/css/docs.css" rel="stylesheet">
 <link href="resources/main.css" rel="stylesheet">
-<<<<<<< HEAD
 <link rel="stylesheet" href="resources/magnific-popup/magnific-popup.css">
 <link rel="stylesheet" href="resources/foundation-essentials-5.4.6/foundation-icons/foundation-icons.css">
 
@@ -39,32 +38,19 @@
 
 <!-- Pop-up ajouter un nouveau contact -->
 	<div id="addContact-popup" class="mfp-hide white-popup">
+	<h3>Ajout d'un nouveau contact</h3>
 		<form method="post" action="addContact">
 
 			Prenom : <input type="text" style="width: 185px;" maxlength="30" name="prenom" id="name" /> 
 			Nom : <input type="text" style="width: 185px;" maxlength="30" name="nom" id="name" /> 
-			Email: <input type="email" style="width: 185px;" maxlength="30" name="email" id="email" /> 
-			Date de naissance : <input type="date" id="datepicker" style="width: 185px;" maxlength="10" name="date">
+			Email: <input type="text" style="width: 185px;" maxlength="30" name="email" id="email" /> 
+			Date de naissance : <input type="text" id="datepicker" style="width: 185px;" maxlength="10" name="date">
 
-			<input type="submit" class="save button" title="Save" value="Save" />
+			<input type="submit" class="save button" title="Save" value="Ajouter" />
 		</form>
 
 	</div>
-	
-<!-- Pop-up modifier un contact -->	
-	<div id="editContact-popup" class="mfp-hide white-popup">
-		<form method="post" action="addContact">
-
-			Prenom : <input type="text" style="width: 185px;" maxlength="30" name="prenom" id="name" /> 
-			Nom : <input type="text" style="width: 185px;" maxlength="30" name="nom" id="name" /> 
-			Email: <input type="email" style="width: 185px;" maxlength="30" name="email" id="email" /> 
-			Date de naissance : <input type="date" id="datepicker" style="width: 185px;" maxlength="10" name="date">
-
-			<input type="submit" class="save button" title="Save" value="Save" />
-		</form>
-
-	</div>
-	
+		
 	<%
 		List<Contact> contactsList = ServiceContact.getContactList();
 		SimpleDateFormat frenchDate = null;
@@ -73,6 +59,8 @@
 		if (!contactsList.isEmpty()) {
 	%>
 	<div style="margin-top: 120px">
+
+  
 	<form action="">
 
 	</form>
@@ -87,6 +75,7 @@
 				<th></th>
 			</tr>
 		</thead>
+
 		<tbody>
 			<%
 				for (Contact contact : contactsList) {
@@ -100,6 +89,25 @@
 				<td><a href="mailto:<%=contact.getEmail()%>"><%=contact.getEmail()%></a></td>
 				<td><a class="editContact-popup-link" href="#editContact-popup"> <i class="fi-pencil"></i></a></td>
 			</tr>
+			
+			<!-- Pop-up modifier un contact -->	
+		<div id="editContact-popup" class="mfp-hide white-popup">
+		
+		<h3>Edition du contact</h3>
+		<form method="post" action="addContact">
+
+			Prenom : <input type="text" style="width: 185px;" maxlength="30" name="prenom" id="name" value="<%=contact.getPrenom()%>" /> 
+			Nom : <input type="text" style="width: 185px;" maxlength="30" name="nom" id="name" value="<%=contact.getNom()%>" /> 
+			Email: <input type="email" style="width: 185px;" maxlength="30" name="email" id="email" value="<%=contact.getEmail()%>" /> 
+			Date de naissance : <input type="text" id="datepicker" style="width: 185px;" maxlength="10" name="date" value="<%=frenchDate.format(contact.getDate_naissance())%>">
+			
+			<input type="submit" class="button" title="Edit" value="Sauvegarder" />
+		</form>
+		<form method="post" action="DeleteContact">
+		<input class="button [secondary alert success]" title="Delete" value="X Supprimer" />
+		</form>
+
+		</div>
 
 			<%
 				}
@@ -107,7 +115,7 @@
 		else {
 			%>
 
-			<h2 style="margin-top: 120px; text-align: center">Vous n'avez aucun contact</h2>
+			<h2 style="margin-top: 120px; text-align: center"> Vous n'avez aucun contact</h2>
 
 			<%
 				}
@@ -121,52 +129,5 @@
 			un nouveau contact</a>
 	</div>
 
-
-=======
-</head>
-<body>
-	<div style="text-align:center">
-		<h1>Carnet de contacts</h1>
-	</div>
-	
-
-	<h2>Liste des contacts</h2>
-
-
-<table>
-  <thead>
-    <tr>
-      <th width="200">Prenom Nom</th>
-      <th>Date de naissance</th>
-      <th width="150">Actif</th>
-      <th width="150">Email</th>
-    </tr>
-  </thead>
-  <tbody>
-  <%
- 
-		    List<Contact> contactsList = ServiceContact.getContactList();
-		    for(Contact contact : contactsList){
- 
-		%>
-  
-    <tr>
-      <td><%=contact.getPrenom() + " " + contact.getNom() %></td>
-      <td><%=contact.getDate_naissance().toString() %></td>
-      <td><%=contact.isActif()?"actif":"inactif" %></td>
-      <td><a href="#"><%=contact.getEmail() %></a></td>
-       <td><a class="button" href="#">modifier</a></td>
-    </tr>
-  
-  	<%
-			}
-		%>
-	</table>
-	
-	<div>
- 	 <a href="addContactPage" class="button">Ajouter un nouveau contact</a>
- 	 </div>
- 
->>>>>>> FETCH_HEAD
 </body>
 </html>
