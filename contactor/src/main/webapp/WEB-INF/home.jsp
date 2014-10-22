@@ -15,7 +15,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Home</title>
+<title>Contactor</title>
 
 <link href="resources/foundation-essentials-5.4.6/css/foundation.css" rel="stylesheet">
 <link href="resources/foundation-essentials-5.4.6/css/docs.css" rel="stylesheet">
@@ -57,9 +57,9 @@
 		frenchDate = new SimpleDateFormat("dd/MM/yyyy");
 		
 		if (!contactsList.isEmpty()) {
+	
 	%>
 	<div style="margin-top: 120px">
-
   
 	<form action="">
 
@@ -78,7 +78,9 @@
 
 		<tbody>
 			<%
+			
 				for (Contact contact : contactsList) {
+					
 			%>
 			
 			<tr>
@@ -87,10 +89,12 @@
 				<td><%=frenchDate.format(contact.getDate_naissance())%></td>
 				<td><%if(contact.isActif())  %> <i class="fi-check"></i><%else%> <i class="fi-x"></i></td>
 				<td><a href="mailto:<%=contact.getEmail()%>"><%=contact.getEmail()%></a></td>
-				<td><a class="editContact-popup-link" href="#editContact-popup"> <i class="fi-pencil"></i></a></td>
+				<td><a href="/editContactForm?id=<%=contact.getId()%>"> <i class="fi-pencil"></i></a></td>
+				
 			</tr>
+
 			
-			<!-- Pop-up modifier un contact -->	
+			<!-- Pop-up modifier un contact 	
 		<div id="editContact-popup" class="mfp-hide white-popup">
 		
 		<h3>Edition du contact</h3>
@@ -103,15 +107,21 @@
 			
 			<input type="submit" class="button" title="Edit" value="Sauvegarder" />
 		</form>
-		<form method="post" action="DeleteContact">
+		
+		<form method="post" action="deleteContact">
 		<input class="button [secondary alert success]" title="Delete" value="X Supprimer" />
 		</form>
 
-		</div>
+		</div> -->
 
 			<%
 				}
-				} 
+			
+		%>
+		</tbody>
+			</table>
+		<% 
+		}
 		else {
 			%>
 

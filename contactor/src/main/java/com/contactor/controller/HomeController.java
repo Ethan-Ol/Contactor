@@ -60,6 +60,12 @@ public class HomeController {
 		return "test";
 	}
 	
+	@RequestMapping(value="/editContactForm")
+	public String editContactForm(){
+		System.err.println("Requete edition");
+		return "editContactForm";
+	}
+	
 	@RequestMapping(value="/addContact", method = RequestMethod.POST)
 	public ModelAndView addContact(HttpServletRequest request, ModelMap model) {
 
