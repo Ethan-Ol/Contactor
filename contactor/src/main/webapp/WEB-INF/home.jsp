@@ -50,7 +50,7 @@
 			<span class="msg error errorNom">nom non valide</span>
 			Email: <input type="text" style="width: 185px;" maxlength="30" name="email" id="email" /> 
 			<span class="msg error errorMail">Adresse mail non valide</span>
-			Date de naissance : <input type="text" id="datepicker" style="width: 185px;" maxlength="10" name="date">
+			Date de naissance : <input type="text" id="datepicker" style="width: 185px;"maxlength="10" name="date">
 			<span style="color: red" class="msg verify">Veuillez v&eacute;rifier tous vos champs</span>
 			<input type="submit" class="save button" title="Save" value="Ajouter" />
 		</form>
@@ -65,7 +65,7 @@
 					<table align="center" style="border:none;border-collapse:collapse">
 						<tr>
 							<td style="padding:0;">
-							<input style="width:250px" type="text" name="svalue" id="search-bar" placeholder="pr&eacute;nom, nom, adresse, etc."/></td>
+							<input style="width:250px" type="text" name="svalue" id="search-bar" placeholder="pr&eacute;nom, nom, mail"/></td>
 							<td style="padding:0;">
 							<input type="submit" class="save button" title="Rechercher" value="Search"/></td>
 						</tr>

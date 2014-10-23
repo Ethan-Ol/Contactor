@@ -25,7 +25,7 @@ $(document).ready(function() {
 	$( "#datepicker" ).datepicker({
 		altField: "#datepicker",
 		closeText: 'Fermer',
-		prevText: 'Pr&eacute;c&eacute;dent',
+		prevText: 'Pr&eacute;c&eacute;dent  ',
 		nextText: 'Suivant',
 		currentText: 'Aujourd\'hui',
 		monthNames: ['Janvier', 'F&eacute;vrier', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Ao&ucirc;t', 'Septembre', 'Octobre', 'Novembre', 'Décembre'],

@@ -22,3 +22,7 @@ body {
     position:fixed;
 
 }
+
+#ui-datepicker-div{
+	background-color:white;
+}
