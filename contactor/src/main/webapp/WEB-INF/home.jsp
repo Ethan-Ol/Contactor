@@ -42,6 +42,7 @@
 
 <!-- Pop-up ajouter un nouveau contact -->
 	<div id="addContact-popup" class="mfp-hide white-popup">
+	<h3>Nouveau contact</h3>
 		<form method="post" action="addContact">
 
 			Prenom : <input type="text" style="width: 185px;" maxlength="30" name="prenom" id="name" /> 
