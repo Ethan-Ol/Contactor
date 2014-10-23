@@ -96,6 +96,7 @@
 				%>
 				<tr>
 				<td><%=adr.toString() %></td>
+				<td><%if(contact.getAdresseLivraison()==adr.getId())  %> Livraison</td>
 				<td><a href="/editAdresseForm?id=<%=""+adr.getId()+"&cid="+contact.getId()%>"> <i class="fi-pencil"></i></a></td>
 				<td><a href="/deleteAdresse?id=<%=""+adr.getId()+"&cid="+contact.getId()%>"> <i class="fi-x"></i></a></td>
 				</tr>
