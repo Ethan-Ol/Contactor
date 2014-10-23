@@ -88,13 +88,17 @@
 
 			<input type="hidden" name="id" value="<%=contact.getId()%>">
 			Prenom : <input type="text" maxlength="30" name="prenom" id="name" value="<%=contact.getPrenom()%>" /> 
+			<span class="msg error errorPrenom">prenom non valide</span>
 			Nom : <input type="text" maxlength="30" name="nom" id="name" value="<%=contact.getNom()%>" /> 
+			<span class="msg error errorNom">nom non valide</span>
 			Email: <input type="email" maxlength="30" name="email" id="email" value="<%=contact.getEmail()%>" /> 
+			<span class="msg error errorMail">Adresse mail non valide</span>
 			Date de naissance : <input type="text" id="datepicker" maxlength="10" name="date" value="<%=frenchDate.format(contact.getDate_naissance())%>">
 			<div class="switch tiny">
 			Actif : <input id="exampleCheckboxSwitch" type="checkbox" name="actif" <%=(contact.isActif()?"checked":"")%>>
 					<label for="exampleCheckboxSwitch"></label>
 			</div>
+			<span style="color: red" class="msg verify">Veuillez v&eacute;rifier tous vos champs</span>
 			
 			Adresses :  <a class="addAddress-popup-link" href="#addAddress-popup"> <i class="fi-plus"></i></a>
 			<table style="width:100%">
@@ -117,8 +121,7 @@
 				
 				</tbody>
 			</table>
-			 
-			<input type="submit" class="button expand" title="Edit" value="Sauvegarder" />
+			<input type="submit" class="save button expand" title="Edit" value="Sauvegarder" />
 		</form>
 		
 		<form method="get" action="deleteContact">

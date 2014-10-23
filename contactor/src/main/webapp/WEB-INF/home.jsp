@@ -1,6 +1,8 @@
 <%@page import="com.google.appengine.api.mail.MailService.Message"%>
 <%@ page
 	import="com.contactor.model.Contact,
+			com.contactor.model.Adresse,
+			com.contactor.services.ServiceAdresse,
 				   com.contactor.services.ServiceContact,
 				   java.util.List,
 				   java.lang.String,
@@ -43,10 +45,13 @@
 		<form method="post" action="addContact">
 
 			Prenom : <input type="text" style="width: 185px;" maxlength="30" name="prenom" id="name" /> 
+			<span class="msg error errorPrenom">prenom non valide</span>
 			Nom : <input type="text" style="width: 185px;" maxlength="30" name="nom" id="name" /> 
+			<span class="msg error errorNom">nom non valide</span>
 			Email: <input type="text" style="width: 185px;" maxlength="30" name="email" id="email" /> 
+			<span class="msg error errorMail">Adresse mail non valide</span>
 			Date de naissance : <input type="text" id="datepicker" style="width: 185px;" maxlength="10" name="date">
-
+			<span style="color: red" class="msg verify">Veuillez v&eacute;rifier tous vos champs</span>
 			<input type="submit" class="save button" title="Save" value="Ajouter" />
 		</form>
 
@@ -62,7 +67,7 @@
 							<td style="padding:0;">
 							<input style="width:250px" type="text" name="svalue" id="search-bar" placeholder="pr&eacute;nom, nom, adresse, etc."/></td>
 							<td style="padding:0;">
-							<input type="submit" class="save button " title="Rechercher" value="Search"/></td>
+							<input type="submit" class="save button" title="Rechercher" value="Search"/></td>
 						</tr>
 					</table>
 				</div>
@@ -70,7 +75,6 @@
 		</div>
 			
 	<%
-		//List<Contact> contactsList = ServiceContact.getContactList();
 		List<Contact> contactsList = (List<Contact>) request.getAttribute("contactList");
 		SimpleDateFormat frenchDate = null;
 		frenchDate = new SimpleDateFormat("dd/MM/yyyy");
@@ -94,9 +98,7 @@
 
 		<tbody>
 			<%
-			
 				for (Contact contact : contactsList) {
-					
 			%>
 			
 			<tr>
@@ -115,9 +117,20 @@
 		
 		<h3><%=contact.getPrenom()%> <%=contact.getNom()%></h3>
 		
-			Email: <input type="email" style="width: 185px;" maxlength="30" name="email" id="email" value="<%=contact.getEmail()%>" /> 
-			Date de naissance : <input type="text" id="datepicker" style="width: 185px;" maxlength="10" name="date" value="<%=frenchDate.format(contact.getDate_naissance())%>">
-			
+			Email: <%=contact.getEmail()%> <br/>
+			Date de naissance : <%=frenchDate.format(contact.getDate_naissance())%> <br/>
+			Actif: <%if(contact.isActif())  %> <i class="fi-check"></i><%else%> <i class="fi-x"></i> <br/>
+			Adresses :  
+				<%
+					List<Adresse> adrList = ServiceAdresse.getAdresses(contact);
+					
+					if (!adrList.isEmpty()) {
+						for (Adresse adr : adrList){
+				
+				%>
+				<p><%=adr.toString() %></p>
+				<% }} %>
+				
 		</div>
 
 			<%
@@ -128,6 +141,7 @@
 			</table>
 		<% 
 		}
+		
 		else {
 			String msg = (String)request.getAttribute("msgEmptyList");
 			if(msg == null)
