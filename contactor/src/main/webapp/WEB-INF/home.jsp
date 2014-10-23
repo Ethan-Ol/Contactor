@@ -99,13 +99,25 @@
 		<tbody>
 			<%
 				for (Contact contact : contactsList) {
+					String date = "";
+					if(contact.getDate_naissance()!=null){
+						try{
+						date = frenchDate.format(contact.getDate_naissance());
+						}
+						catch (Exception e){
+							date = "inconnue";
+						}
+					}
+					else{
+						date = "inconnue";
+					}
 			%>
 			
 			<tr>
 				<td><a class="detailsContact-popup-link" href="#detailsContact-popup"> <i class="fi-magnifying-glass"></i></a></td>
 				<td><%=contact.getPrenom()%></td>
 				<td><%=contact.getNom()%></td>
-				<td><%=frenchDate.format(contact.getDate_naissance())%></td>
+				<td><%=date%></td>
 				<td><%if(contact.isActif())  %> <i class="fi-check"></i><%else%> <i class="fi-x"></i></td>
 				<td><a href="mailto:<%=contact.getEmail()%>"><%=contact.getEmail()%></a></td>
 				<td><a href="/editContactForm?id=<%=contact.getId()%>"> <i class="fi-pencil"></i></a></td>

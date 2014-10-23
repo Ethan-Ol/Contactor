@@ -25,10 +25,14 @@ public class ServiceContact {
 	 * @return
 	 */
 	public static long insertContact (Contact c){
+		if(!isValid(c))
+			return -1;
+		else{
 		DAOContacts dao = DAOFactory.getDAOContact();
 		c.setId(dao.generateId());
 		dao.insertContact(c);
 		return c.getId();
+		}
 	}
 	
 	/**
@@ -37,6 +41,9 @@ public class ServiceContact {
 	 * @return
 	 */
 	public static boolean updateContact (Contact c){
+		if(!isValid(c))
+			return false;
+		else
 		return DAOFactory.getDAOContact().updateContact(c);
 	}
 	
@@ -87,6 +94,10 @@ public class ServiceContact {
 				return true;
 			}
 		});
+	}
+	
+	public static boolean isValid (Contact contact){
+		return !(contact.getNom().isEmpty() || contact.getPrenom().isEmpty());
 	}
 	
 }
