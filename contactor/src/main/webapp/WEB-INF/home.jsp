@@ -1,3 +1,4 @@
+<%@page import="com.google.appengine.api.mail.MailService.Message"%>
 <%@ page
 	import="com.contactor.model.Contact,
 				   com.contactor.services.ServiceContact,
@@ -50,20 +51,34 @@
 		</form>
 
 	</div>
+	
+	<div style="margin-top: 120px">
+	
+	<div class="div-title" style="width: 100%;">
+			<form action="/search" method="post">
+				<div style="margin: 5dp;">
+					<table align="center">
+						<tr>
+							<td><input type="text" style="width: 90%;" name="svalue"
+								id="search-bar" /></td>
+							<td><input type="submit" class="save button" title="Search"
+								value="Search" /></td>
+						</tr>
+					</table>
+				</div>
+			</form>
+		</div>
 		
 	<%
-		List<Contact> contactsList = ServiceContact.getContactList();
+		//List<Contact> contactsList = ServiceContact.getContactList();
+		List<Contact> contactsList = (List<Contact>) request.getAttribute("contactList");
 		SimpleDateFormat frenchDate = null;
 		frenchDate = new SimpleDateFormat("dd/MM/yyyy");
 		
 		if (!contactsList.isEmpty()) {
 	
 	%>
-	<div style="margin-top: 120px">
   
-	<form action="">
-
-	</form>
 	<table  align="center">
 		<thead>
 			<tr>
@@ -123,13 +138,17 @@
 		<% 
 		}
 		else {
+			String msg = (String)request.getAttribute("msgEmptyList");
+			if(msg == null)
+				msg = "";
 			%>
-
-			<h2 style="margin-top: 120px; text-align: center"> Vous n'avez aucun contact</h2>
+			
+			<h2 style="margin-top: 20dp; text-align: center"><%=msg%></h2>
 
 			<%
 				}
 			%>
+	</div>
 		
 	<div style="margin-top: 5%; text-align: center">
 		<a class="addContact-popup-link button" href="#addContact-popup">Ajouter

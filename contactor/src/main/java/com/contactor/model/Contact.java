@@ -57,11 +57,25 @@ public class Contact {
 		return true;
 	}
 
+	public boolean removeAdresse(long adresseId){
+		if( adresseLivraison == adresseId)
+			adresseLivraison = -1;
+		for(int i=0; i<listAdresses.size();i++){
+			if(listAdresses.get(i) == adresseId){
+				listAdresses.remove(i);
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	public long getAdresseLivraison() {
 		return adresseLivraison;
 	}
 
 	public void setAdresseLivraison(long adresseLivraison) {
+		if(!listAdresses.contains(adresseLivraison))
+			listAdresses.add(adresseLivraison);
 		this.adresseLivraison = adresseLivraison;
 	}
 

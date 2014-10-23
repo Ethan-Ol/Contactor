@@ -1,9 +1,13 @@
 package com.contactor.services;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.contactor.dao.DAOAdresses;
 import com.contactor.dao.DAOContacts;
 import com.contactor.dao.DAOFactory;
 import com.contactor.model.Adresse;
+import com.contactor.model.Contact;
 
 public class ServiceAdresse {
 	
@@ -14,6 +18,27 @@ public class ServiceAdresse {
 	 */
 	public static Adresse getAdresse (long id){
 		return DAOFactory.getDAOAdresses().getAdresse(id);
+	}
+	
+	/**
+	 * Recupere une liste d'adresse à partir d'un contact
+	 * @param id
+	 * @return
+	 */
+	public static List<Adresse> getAdresses (Contact contact){
+		ArrayList<Adresse> list = new ArrayList<Adresse>();
+		ArrayList<Long> adr_list_id = contact.getListAdresses();
+		
+		Adresse adr = null;
+		
+		for (Long adrId : adr_list_id) {
+			adr = DAOFactory.getDAOAdresses().getAdresse(adrId);
+			if(adr != null){
+				list.add(adr);
+			}
+		}
+		
+		return list;
 	}
 	
 	/**
@@ -42,7 +67,7 @@ public class ServiceAdresse {
 	 * @param c
 	 * @return
 	 */
-	public static boolean removeAdresse (Adresse c){
-		return DAOFactory.getDAOAdresses().removeAdresse(c.getId());
+	public static boolean removeAdresse (long id){
+		return DAOFactory.getDAOAdresses().removeAdresse(id);
 	}
 }

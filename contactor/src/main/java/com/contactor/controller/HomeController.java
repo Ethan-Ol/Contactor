@@ -19,17 +19,20 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import org.springframework.web.servlet.ModelAndView;
 
+import com.contactor.model.Adresse;
 import com.contactor.model.Contact;
+import com.contactor.services.ServiceAdresse;
 import com.contactor.services.ServiceContact;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
+import com.google.appengine.api.search.query.QueryParser.arg_return;
 
 @Controller
 public class HomeController {
-
+	
 	@RequestMapping(value="/")
 	public String base(ModelMap model){
 		return home(model);
@@ -38,11 +41,10 @@ public class HomeController {
 	@RequestMapping(value="/home", method = RequestMethod.GET)
 	public String home(ModelMap model){
 		System.err.println("Requete home");
-		
 		List<Contact> list = ServiceContact.getContactList();
 		model.addAttribute("contactList",  list);
-		
-		return "test";
+		model.addAttribute("msgEmptyList","Votre liste de contact est vide.");
+		return "home";
 	}
 	
 	@RequestMapping(value="/search", method = RequestMethod.POST)
@@ -55,15 +57,118 @@ public class HomeController {
 			return home(model);
 		
 		List<Contact> list = ServiceContact.getContactListOnName(value);
-
 		model.addAttribute("contactList",  list);
-		return "test";
+		model.addAttribute("msgEmptyList","Aucun contact ne correspond à votre recherche.");
+		
+		return "home";
 	}
 	
-	@RequestMapping(value="/editContactForm")
-	public String editContactForm(){
-		System.err.println("Requete edition");
-		return "editContactForm";
+	@RequestMapping(value="/deleteContact", method = RequestMethod.GET)
+	public ModelAndView deleteContact(HttpServletRequest request, ModelMap model) {
+
+		String id = request.getParameter("id");
+		System.err.println("Delete : " + id);
+		
+		Integer contact_id = -1;
+		try{
+		contact_id = Integer.parseInt(id);
+		}
+		catch (Exception e){
+			System.err.println(e.getMessage());
+			
+			List<Contact> list = new ArrayList<Contact>();
+			model.addAttribute("contactList",  list);
+			model.addAttribute("msgEmptyList","Erreur lors de la suppression du contact.");
+			return new ModelAndView("home");
+		}
+		
+		if(!ServiceContact.removeContact(contact_id)){
+			List<Contact> list = new ArrayList<Contact>();
+			model.addAttribute("contactList",  list);
+			model.addAttribute("msgEmptyList","Erreur lors de la suppression du contact.");
+			return new ModelAndView("home");
+		}
+		
+		return new ModelAndView("redirect:home");
+	}
+	
+	@RequestMapping(value="/deleteAdresse", method = RequestMethod.GET)
+	public ModelAndView deleteAdresse(HttpServletRequest request, ModelMap model) {
+
+		String id = request.getParameter("id");
+		System.err.println("Delete adr : " + id);
+		
+		Integer adr_id = -1;
+		try{
+		adr_id = Integer.parseInt(id);
+		}
+		catch (Exception e){
+			System.err.println(e.getMessage());
+			
+			List<Contact> list = new ArrayList<Contact>();
+			model.addAttribute("contactList",  list);
+			model.addAttribute("msgEmptyList","Erreur lors de la suppression de l'adresse");
+			return new ModelAndView("home");
+		}
+		
+		String cid = request.getParameter("cid");
+		System.err.println("From contact: " + cid);
+		
+		Integer contact_id = -1;
+		try{
+		contact_id = Integer.parseInt(cid);
+		}
+		catch (Exception e){
+			System.err.println(e.getMessage());
+			
+			List<Contact> list = new ArrayList<Contact>();
+			model.addAttribute("contactList",  list);
+			model.addAttribute("msgEmptyList","Erreur lors de la suppression de l'adresse");
+			return new ModelAndView("home");
+		}
+		
+		Contact c = ServiceContact.getContact(contact_id);
+		if(c!=null){
+		c.removeAdresse(adr_id);
+		ServiceContact.updateContact(c);
+		}
+		else{
+			List<Contact> list = new ArrayList<Contact>();
+			model.addAttribute("contactList",  list);
+			model.addAttribute("msgEmptyList","Erreur lors de la suppression de l'adresse");
+			return new ModelAndView("home");
+		}
+		
+		if(!ServiceAdresse.removeAdresse(adr_id)){
+			List<Contact> list = new ArrayList<Contact>();
+			model.addAttribute("contactList",  list);
+			model.addAttribute("msgEmptyList","Erreur lors de la suppression de l'adresse");
+			return new ModelAndView("home");
+		}
+		
+		return new ModelAndView("redirect:editContactForm?id="+contact_id);
+	}
+	
+	@RequestMapping(value="/editContactForm", method=RequestMethod.GET)
+	public ModelAndView editContactForm(HttpServletRequest request, ModelMap model){
+		String id = request.getParameter("id");
+		Integer contact_id=-1;
+		
+		try{
+		contact_id = Integer.parseInt(id);
+		}
+		catch (Exception e){
+			System.err.println(e.getMessage());
+			
+			List<Contact> list = new ArrayList<Contact>();
+			model.addAttribute("contactList",  list);
+			model.addAttribute("msgEmptyList","Erreur lors de l'édition du contact.");
+			return new ModelAndView("home");
+		}
+		
+		System.err.println("Edition contact : " + id);
+		model.addAttribute("id",contact_id);
+		return new ModelAndView("editContactForm");
 	}
 	
 	@RequestMapping(value="/addContact", method = RequestMethod.POST)
@@ -95,22 +200,112 @@ public class HomeController {
 
 		return new ModelAndView("redirect:home");
 	}
+	
+	@RequestMapping(value="/addAddress", method = RequestMethod.POST)
+	public ModelAndView addAddress(HttpServletRequest request, ModelMap model) {
+
+		String num = request.getParameter("num");
+		String cp = request.getParameter("cp");
+		String ville = request.getParameter("ville");
+		String rue = request.getParameter("rue");
+		String id = request.getParameter("id");
+		
+		Integer contact_id = -1;
+		try{
+			contact_id = Integer.parseInt(id);
+		}
+		catch (Exception e){
+			System.err.println(e.getMessage());
+			
+			List<Contact> list = new ArrayList<Contact>();
+			model.addAttribute("contactList",  list);
+			model.addAttribute("msgEmptyList","Erreur l'ajout de l'adresse.");
+			return new ModelAndView("redirect:home");
+		}
+		
+		Adresse adresse = new Adresse();
+		adresse.setCodePostal(cp);
+		adresse.setNumero(num);
+		adresse.setRue(rue);
+		adresse.setVille(ville);
+		Long adrId = ServiceAdresse.insertAdresse(adresse);
+		
+		Contact c = ServiceContact.getContact(contact_id);
+		if(c!=null){
+			c.addAdresse(adrId, false);
+			ServiceContact.updateContact(c);
+		}
+		else
+		{
+			List<Contact> list = new ArrayList<Contact>();
+			model.addAttribute("contactList",  list);
+			model.addAttribute("msgEmptyList","Erreur l'ajout de l'adresse.");
+			return new ModelAndView("redirect:home");
+		}
+		
+		System.out.println("adresse added : " + adresse);
+
+		return new ModelAndView("redirect:editContactForm?id="+contact_id);
+	}
+	
+	@RequestMapping(value="/editContact", method = RequestMethod.POST)
+	public ModelAndView editContact(HttpServletRequest request, ModelMap model) {
+
+		String prenom = request.getParameter("prenom");
+		String nom = request.getParameter("nom");
+		String email = request.getParameter("email");
+		String date = request.getParameter("date");
+		String actif = request.getParameter("actif");
+		String id = request.getParameter("id");
+		
+		System.err.println("actif : " +actif+ " ; id = " + id);
+		
+		Contact c = new Contact();
+		SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
+		try {
+			Date d = formatter.parse(date);
+			c.setDate_naissance(d);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		
+		Integer contact_id = -1;
+		try{
+			contact_id = Integer.parseInt(id);
+		}
+		catch (Exception e){
+			System.err.println(e.getMessage());
+			
+			List<Contact> list = new ArrayList<Contact>();
+			model.addAttribute("contactList",  list);
+			model.addAttribute("msgEmptyList","Erreur lors de l'édition du contact.");
+			return new ModelAndView("redirect:home");
+		}
+		
+		
+		c.setNom(nom);
+		c.setEmail(email);
+		c.setPrenom(prenom);
+		c.setActif("on".equals(actif));
+		c.setId(contact_id);
+		
+
+		if(ServiceContact.updateContact(c)){
+			//good
+		}
+		else
+		{
+			List<Contact> list = new ArrayList<Contact>();
+			model.addAttribute("contactList",  list);
+			model.addAttribute("msgEmptyList","Erreur lors de l'édition du contact.");
+			return new ModelAndView("redirect:home");
+		}
+		
+		List<Contact> clist = ServiceContact.getContactList();
+		model.addAttribute("contactList",  clist);
+		
+		System.out.println("modified : " + prenom + " " + nom + " : " + email + " ; " + date);
+
+		return new ModelAndView("redirect:home");
+	}
 }
-
-/*
- * 
-Note pour les jsp avec les servlets
-
-protected void doPost(HttpServletRequest request, HttpServletResponse response)
-throws ServletException, IOException {
-
-String parameter = request.getParameter("name");
-
-request.setAttribute("name",parameter);
-
-RequestDispatcher dispatch = request.getRequestDispatcher(« /page.jsp");
-
-dispatch.forward(request, response);
-}
-
- */

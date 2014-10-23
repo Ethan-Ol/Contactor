@@ -41,27 +41,16 @@
 		<h1 style="color: white">Contactor</h1>
 	</div>
 
-	<div class="div-title" style="width: 100%;">
-		<form action="/search" method="post">
-			<div class="large-8 small-9 columns" style="margin-top: 120px;">
-				<table style="width: 100%">
-					<tr>
-						<td><input type="text" style="width: 90%;" name="svalue" id="search-bar" /></td>
-						<td><input type="submit" class="save button" title="Search" value="Search" /></td>
-					</tr>
-				</table>
-			</div>
-		</form>
-	</div>
-
 	<!-- Pop-up ajouter un nouveau contact -->
 	<div id="addContact-popup" class="mfp-hide white-popup">
 		<form method="post" action="addContact">
 
-			Prenom : <input type="text" style="width: 185px;" maxlength="30" name="prenom" id="name" /> 
-			Nom : <input type="text" style="width: 185px;" maxlength="30" name="nom" id="name" /> 
-			Email: 	<input type="text" style="width: 185px;" maxlength="30" name="email" id="email" /> 
-			Date de naissance : <input type="text" id="datepicker" style="width: 185px;" maxlength="10" name="date">
+			Prenom : <input type="text" style="width: 185px;" maxlength="30"
+				name="prenom" id="name" /> Nom : <input type="text"
+				style="width: 185px;" maxlength="30" name="nom" id="name" /> Email:
+			<input type="text" style="width: 185px;" maxlength="30" name="email"
+				id="email" /> Date de naissance : <input type="text"
+				id="datepicker" style="width: 185px;" maxlength="10" name="date">
 
 			<input type="submit" class="save button" title="Save" value="Ajouter" />
 		</form>
@@ -69,8 +58,23 @@
 	</div>
 
 	<div style="margin-top: 120px">
+		<div class="div-title" style="width: 100%;">
+			<form action="/search" method="post">
+				<div style="margin: 5dp;">
+					<table align="center">
+						<tr>
+							<td><input type="text" style="width: 90%;" name="svalue"
+								id="search-bar" /></td>
+							<td><input type="submit" class="save button" title="Search"
+								value="Search" /></td>
+						</tr>
+					</table>
+				</div>
+			</form>
+		</div>
+
 		<%
-			List<Contact> contactsList = (List<Contact>)request.getAttribute("contactList");
+			List<Contact> contactsList = (List<Contact>) request.getAttribute("contactList");
 			//List<Contact> contactsList = ServiceContact.getContactList();
 
 			SimpleDateFormat frenchDate = null;

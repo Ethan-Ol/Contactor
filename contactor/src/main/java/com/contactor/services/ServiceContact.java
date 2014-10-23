@@ -45,8 +45,8 @@ public class ServiceContact {
 	 * @param c
 	 * @return
 	 */
-	public static boolean removeContact (Contact c){
-		return DAOFactory.getDAOContact().removeContact(c.getId());
+	public static boolean removeContact (long id){
+		return DAOFactory.getDAOContact().removeContact(id);
 	}
 	
 	/**
