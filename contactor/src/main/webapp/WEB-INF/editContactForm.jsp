@@ -71,9 +71,9 @@
 		<form method="post" action="addAddress">
 		
 			<input type="hidden" name="id" value="<%=contact.getId()%>">
-			Numéro: <input type="text" style="width: 185px;" maxlength="30" name="num"/> 
+			Num&eacute;ro: <input type="text" style="width: 185px;" maxlength="30" name="num"/> 
 			Rue : <input type="text" style="width: 185px;" maxlength="30" name="rue"/> 
-			Ville: <input type="email" style="width: 185px;" maxlength="30" name="ville"/> 
+			Ville: <input type="text" style="width: 185px;" maxlength="30" name="ville"/> 
 			Code postal : <input type="text"  style="width: 185px;" maxlength="10" name="cp" >
 			
 			<input type="submit" class="button" title="Edit" value="Sauvegarder" />

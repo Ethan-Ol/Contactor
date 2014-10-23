@@ -12,6 +12,10 @@ $(document).ready(function() {
 		  type: 'inline'
 		});
 	
+	$('.detailsContact-popup-link').magnificPopup({ 
+		  type: 'inline'
+		});
+	
 	
 
 

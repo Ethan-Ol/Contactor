@@ -51,24 +51,24 @@
 		</form>
 
 	</div>
-	
+		
 	<div style="margin-top: 120px">
 	
-	<div class="div-title" style="width: 100%;">
+			<div class="div-title" style="width: 100%;">
 			<form action="/search" method="post">
-				<div style="margin: 5dp;">
-					<table align="center">
+			<div style="margin: 5dp;">
+					<table align="center" style="border:none;border-collapse:collapse">
 						<tr>
-							<td><input type="text" style="width: 90%;" name="svalue"
-								id="search-bar" /></td>
-							<td><input type="submit" class="save button" title="Search"
-								value="Search" /></td>
+							<td style="padding:0;">
+							<input style="width:250px" type="text" name="svalue" id="search-bar" placeholder="pr&eacute;nom, nom, adresse, etc."/></td>
+							<td style="padding:0;">
+							<input type="submit" class="save button " title="Rechercher" value="Search"/></td>
 						</tr>
 					</table>
 				</div>
 			</form>
 		</div>
-		
+			
 	<%
 		//List<Contact> contactsList = ServiceContact.getContactList();
 		List<Contact> contactsList = (List<Contact>) request.getAttribute("contactList");
@@ -82,6 +82,7 @@
 	<table  align="center">
 		<thead>
 			<tr>
+				<th></th>
 				<th>Prenom</th>
 				<th>Nom</th>
 				<th>Date de naissance</th>
@@ -99,6 +100,7 @@
 			%>
 			
 			<tr>
+				<td><a class="detailsContact-popup-link" href="#detailsContact-popup"> <i class="fi-magnifying-glass"></i></a></td>
 				<td><%=contact.getPrenom()%></td>
 				<td><%=contact.getNom()%></td>
 				<td><%=frenchDate.format(contact.getDate_naissance())%></td>
@@ -107,27 +109,16 @@
 				<td><a href="/editContactForm?id=<%=contact.getId()%>"> <i class="fi-pencil"></i></a></td>
 				
 			</tr>
-
 			
-			<!-- Pop-up modifier un contact 	
-		<div id="editContact-popup" class="mfp-hide white-popup">
+			
+		<div id="detailsContact-popup" class="mfp-hide white-popup">
 		
-		<h3>Edition du contact</h3>
-		<form method="post" action="addContact">
-
-			Prenom : <input type="text" style="width: 185px;" maxlength="30" name="prenom" id="name" value="<%=contact.getPrenom()%>" /> 
-			Nom : <input type="text" style="width: 185px;" maxlength="30" name="nom" id="name" value="<%=contact.getNom()%>" /> 
+		<h3><%=contact.getPrenom()%> <%=contact.getNom()%></h3>
+		
 			Email: <input type="email" style="width: 185px;" maxlength="30" name="email" id="email" value="<%=contact.getEmail()%>" /> 
 			Date de naissance : <input type="text" id="datepicker" style="width: 185px;" maxlength="10" name="date" value="<%=frenchDate.format(contact.getDate_naissance())%>">
 			
-			<input type="submit" class="button" title="Edit" value="Sauvegarder" />
-		</form>
-		
-		<form method="post" action="deleteContact">
-		<input class="button [secondary alert success]" title="Delete" value="X Supprimer" />
-		</form>
-
-		</div> -->
+		</div>
 
 			<%
 				}
@@ -140,13 +131,14 @@
 		else {
 			String msg = (String)request.getAttribute("msgEmptyList");
 			if(msg == null)
-				msg = "";
+				
+					msg = "";
 			%>
-			
+
 			<h2 style="margin-top: 20dp; text-align: center"><%=msg%></h2>
 
 			<%
-				}
+			}
 			%>
 	</div>
 		
