@@ -31,7 +31,6 @@
 <link rel="stylesheet" href="resources/magnific-popup/magnific-popup.css">
 <link rel="stylesheet" href="resources/foundation-essentials-5.4.6/foundation-icons/foundation-icons.css">
 
-
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script src="resources/magnific-popup/jquery.magnific-popup.js"></script>
 <script src="resources/script.js"></script>
@@ -113,7 +112,7 @@
 				%>
 				<tr>
 				<td><%=adr.toString() %></td>
-				<td><a class="editAddress-popup-link" href="#editAddress-popup"> <i class="fi-pencil"></i></a></td>
+				<td><a href="/editAdresseForm?id=<%=""+adr.getId()+"&cid="+contact.getId()%>"> <i class="fi-pencil"></i></a></td>
 				<td><a href="/deleteAdresse?id=<%=""+adr.getId()+"&cid="+contact.getId()%>"> <i class="fi-x"></i></a></td>
 				</tr>
 				
