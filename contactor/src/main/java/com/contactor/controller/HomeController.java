@@ -29,6 +29,10 @@ import com.google.appengine.api.search.query.QueryParser.arg_return;
 @Controller
 public class HomeController {
 	
+	private ModelAndView goHome(){
+		return new ModelAndView("home");
+	}
+	
 	@RequestMapping(value="/")
 	public String base(ModelMap model){
 		return home(model);
@@ -229,6 +233,7 @@ public class HomeController {
 			c.setDate_naissance(d);
 		} catch (ParseException e) {
 			e.printStackTrace();
+			goHome();
 		}
 		c.setNom(nom);
 		c.setEmail(email);

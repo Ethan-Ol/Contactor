@@ -58,7 +58,7 @@ public class ServiceContact {
 		return DAOFactory.getDAOContact().selectContactOnFilter(new ContactFilterOnParam(name) {
 			@Override
 			public boolean applyfilter(Contact contact) {
-				return contact.getNom().contains(this.m_param) || contact.getPrenom().contains(m_param);
+				return contact.getNom().contains(this.m_param) || contact.getPrenom().contains(m_param) || contact.getEmail().contains(m_param);
 			}
 		});
 	}
