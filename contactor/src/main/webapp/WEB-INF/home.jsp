@@ -103,7 +103,7 @@
 					String date = "";
 					if(contact.getDate_naissance()!=null){
 						try{
-						date = frenchDate.format(contact.getDate_naissance());
+							date = frenchDate.format(contact.getDate_naissance());
 						}
 						catch (Exception e){
 							date = "inconnue";
@@ -131,7 +131,7 @@
 		<h3><%=contact.getPrenom()%> <%=contact.getNom()%></h3>
 		
 			Email: <%=contact.getEmail()%> <br/>
-			Date de naissance : <%=frenchDate.format(contact.getDate_naissance())%> <br/>
+			Date de naissance : <%=date%> <br/>
 			Actif: <%if(contact.isActif())  %> <i class="fi-check"></i><%else%> <i class="fi-x"></i> <br/>
 			Adresses :  
 				<%

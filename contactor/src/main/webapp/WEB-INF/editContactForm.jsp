@@ -16,7 +16,21 @@
 	frenchDate = new SimpleDateFormat("dd/MM/yyyy");
 	
 	Integer contact_id = (Integer)request.getAttribute("id");
-	Contact contact = ServiceContact.getContact(contact_id);%>
+	Contact contact = ServiceContact.getContact(contact_id);
+	
+	String date = "";
+	if(contact.getDate_naissance()!=null){
+		try{
+			date = frenchDate.format(contact.getDate_naissance());
+		}
+		catch (Exception e){
+			date = "inconnue";
+		}
+	}
+	else{
+		date = "inconnue";
+	}
+	%>
 
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -76,7 +90,7 @@
 			<span class="msg error errorNom">nom non valide</span>
 			Email: <input type="email" maxlength="30" name="email" id="email" value="<%=contact.getEmail()%>" /> 
 			<span class="msg error errorMail">Adresse mail non valide</span>
-			Date de naissance : <input type="text" id="datepicker" maxlength="10" name="date" value="<%=frenchDate.format(contact.getDate_naissance())%>">
+			Date de naissance : <input type="text" id="datepicker" maxlength="10" name="date" value="<%=date%>">
 			<div class="switch tiny">
 			Actif : <input id="exampleCheckboxSwitch" type="checkbox" name="actif" <%=(contact.isActif()?"checked":"")%>>
 					<label for="exampleCheckboxSwitch"></label>
